@@ -1,0 +1,26 @@
+.puzzle {
+    display : grid;
+    grid-template-columns: 100px 100px 100px;
+    column-gap: 5px;
+    row-gap: 5px;
+    border: 5px solid black; 
+    width: max-content;
+    background-color: black;
+
+}
+
+.tile {
+    width: 100px;
+    height: 100px;
+    color: white;
+    text-align: center;
+    line-height: 100px;
+}
+
+.emptytile {
+    width: 100px;
+    height: 100px;
+    color: black;
+    text-align: center;
+    line-height: 100px;
+}
