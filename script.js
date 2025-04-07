@@ -1,13 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
     const hello = document.querySelector(".hello");
-    hello.textContent = "WELCOME!"
+    hello.textContent = "SLIDE PUZZLE"
+
+    const dims = document.querySelector(".dims");
+    dims.textContent = "3x3"
+
+    const play = document.querySelector(".play");
+
+    play.addEventListener("click", function () {
+        makePuzzle();
+    });    
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const tiles = Array.from(document.querySelectorAll(".tile"));
-    const size = 3;
 
-    const end = document.querySelector(".end");
+    const image = 'image.jpg';
+    const gridSize = 3;
+    const tileSize = 100;
 
     const imageUrl = [
         'game1/1.jpg',
@@ -25,9 +33,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function makePuzzle() {
 
-        const randomized = puzzleArray.sort(() => Math.random() - 0.5);
+        let randomized = puzzleArray.sort(() => Math.random() - 0.5);
 
         while(!isSolvable(randomized)) randomized = puzzleArray.sort(() => Math.random() - 0.5);
+
+        document.querySelector(".start-screen").style.display = "none";
+
+        const puzzleContainer = document.querySelector('.puzzle-container');
+        puzzleContainer.style.backgroundColor='white';
+
+        const puzzle = document.querySelector('.puzzle');
+
+        for (let i = 0; i < 9; i++) {
+            const tile = document.createElement('div');
+            tile.classList.add('tile');
+            puzzle.appendChild(tile);
+        }
+
+        const tiles = document.querySelectorAll('.tile');
+
+        tiles.forEach((tile, index) => {
+            tile.addEventListener("click", function () {
+                if (isAdjacent(index)) {
+                    swapTile(index);
+                    renderPuzzle();
+                }
+            });
+        });    
             
         tiles.forEach((tile, index) => {
 
@@ -39,7 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 tile.style.backgroundColor = "transparent";
             } else {
                 tile.textContent = tileNumber;
-                tile.style.backgroundImage = `url(${imageUrl[tileNumber - 1]})`;
+                
+                const row = Math.floor((tileNumber - 1) / gridSize);
+                const col = (tileNumber - 1) % gridSize;
+
+                tile.style.backgroundImage = `url('image.jpg')`;
+                tile.style.backgroundSize = `${tileSize * gridSize}px ${tileSize * gridSize}px`;
+                tile.style.backgroundPosition = `-${col * tileSize}px -${row * tileSize}px`;
             }
         });
     }
@@ -58,6 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderPuzzle() {
+        const tiles = document.querySelectorAll('.tile');
+
         tiles.forEach((tile, index) => {
             const tileNumber = puzzleArray[index];
     
@@ -67,25 +107,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 tile.style.backgroundColor = "transparent";
             } else {
                 tile.textContent = tileNumber;
-                tile.style.backgroundImage = `url(${imageUrl[tileNumber - 1]})`;
+                tile.style.backgroundImage = `url('${image}')`;
+                tile.style.backgroundSize = `${tileSize * gridSize}px ${tileSize * gridSize}px`;
+
+                const row = Math.floor((tileNumber - 1) / gridSize);
+                const col = (tileNumber - 1) % gridSize;
+
+                tile.style.backgroundPosition = `-${col * tileSize}px -${row * tileSize}px`;
             }
         });
         checkIfSolved();
     }
 
-    tiles.forEach((tile, index) => {
-        tile.addEventListener("click", function () {
-            if (isAdjacent(index)) {
-                swapTile(index);
-                renderPuzzle();
-            }
-        });
-    });
 
     function isAdjacent(index) {
         const emptyIndex = puzzleArray.indexOf(9);
-        const rowDiff = Math.abs(Math.floor(index / size) - Math.floor(emptyIndex / size));
-        const colDiff = Math.abs((index % size) - (emptyIndex % size));
+        const rowDiff = Math.abs(Math.floor(index / gridSize) - Math.floor(emptyIndex / gridSize));
+        const colDiff = Math.abs((index % gridSize) - (emptyIndex % gridSize));
 
         return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
     }
@@ -100,7 +138,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
     function checkIfSolved() {
         tiles.forEach((tile, index) => {
-            const correctOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            
+        const correctOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
         const isSolved = puzzleArray.every((tileNumber, index) => tileNumber === correctOrder[index]);
 
@@ -110,5 +149,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    makePuzzle();
-})
+
+    

@@ -1,12 +1,17 @@
+.body, html {
+    height: 100%;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    background: linear-gradient(to bottom right, rgb(146, 220, 248), rgb(80, 200, 180));
+}
+
 .puzzle {
     display : grid;
     grid-template-columns: 100px 100px 100px;
     column-gap: 5px;
     row-gap: 5px;
-    border: 5px solid black; 
     width: max-content;
-    background-color: black;
-
 }
 
 .tile {
@@ -17,10 +22,85 @@
     line-height: 100px;
 }
 
-.emptytile {
-    width: 100px;
-    height: 100px;
-    color: black;
+.hello {
+    
+    margin-top: 300px;
+    font-weight: bold;
     text-align: center;
-    line-height: 100px;
+   
+    color: white;
+
+    font-size: 100px;
+    font-family: "Quicksand", sans-serif;
+    margin-bottom: 0;
+
+    width:600px;
+
+    text-shadow: 3px 3px 2px rgb(80, 164, 195),
+                 6px 6px 2px rgb(80, 164, 195);
+}
+
+.dims {
+
+    font-weight: 600;
+    text-align: center;
+    color:white;
+    font-size: 50px;
+    font-family:"Quicksand", sans-serif;
+    margin-top: 0;
+
+    text-shadow: 3px 3px 2px rgb(80, 164, 195);
+
+}
+
+.play {
+
+    width: 200px;
+    height: 70px;
+    font-weight: 900;
+    font-family:"Quicksand", sans-serif;
+    color: white;
+    text-shadow: 2px 2px 1px rgb(61, 215, 61);
+
+    background-color: rgb(99, 255, 99);
+    border: 5px solid rgb(255, 255, 255);
+    font-size:35px;
+ 
+    
+    margin-top: 50px;
+    display: block;
+
+    border-radius: 50px;
+    box-shadow: 5px 5px 3px rgb(80, 164, 195);
+
+}
+
+.play:hover {
+    color: white;
+    text-shadow: 2px 2px 1px rgb(101, 246, 101);
+    background-color: rgb(150, 255, 150);
+    border: 3px solid rgb(255, 255, 255);
+    font-size:39px;
+
+    box-shadow: 3px 3px 3px rgb(96, 167, 193)
+
+}
+
+.buttons {
+
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+
+    
+}
+
+.puzzle-container {
+
+    width: 320px;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
 }
