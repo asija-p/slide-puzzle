@@ -12,21 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });    
 });
 
+const popupContainer = document.querySelector(".popup-container");
+const popup = document.getElementById("moveCount");
+const closeButton = document.getElementById("closePopup");
+
+closeButton.addEventListener("click", () => {
+    popupContainer.classList.remove("show");
+});
+
 
     const image = 'image.jpg';
     const gridSize = 3;
     const tileSize = 100;
 
-    const imageUrl = [
-        'game1/1.jpg',
-        'game1/2.jpg',
-        'game1/3.jpg',
-        'game1/4.jpg',
-        'game1/5.jpg',
-        'game1/6.jpg',
-        'game1/7.jpg',
-        'game1/8.jpg',
-    ]
+    let moves = 0;
 
     const puzzleArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     
@@ -57,6 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (isAdjacent(index)) {
                     swapTile(index);
                     renderPuzzle();
+                    setTimeout(() => {
+                        checkIfSolved();
+                    }, 0);
                 }
             });
         });    
@@ -116,7 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 tile.style.backgroundPosition = `-${col * tileSize}px -${row * tileSize}px`;
             }
         });
-        checkIfSolved();
+        
+        
     }
 
 
@@ -130,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function swapTile(index) {
+        moves++;
         const emptyIndex = puzzleArray.indexOf(9);
         puzzleArray[emptyIndex] = puzzleArray[index]; 
         puzzleArray[index] = 9;
@@ -137,16 +141,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
     function checkIfSolved() {
-        tiles.forEach((tile, index) => {
-            
+    
         const correctOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
         const isSolved = puzzleArray.every((tileNumber, index) => tileNumber === correctOrder[index]);
-
+    
         if (isSolved) {
-            end.textContent = "YOU WON!"
+
+            moveCount.textContent = `moves: ${moves}`
+            popupContainer.classList.add("show");
         }
-        });
     }
 
 
